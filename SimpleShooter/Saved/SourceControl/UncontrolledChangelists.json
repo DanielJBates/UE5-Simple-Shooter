@@ -13,7 +13,19 @@
 				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/AssetPacks/ModularSciFiSeason1/StarterBundle/ModularSci_Comm/Textures/T_Metal_Brushed_N.uasset",
 				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/AssetPacks/ModularSciFiSeason1/StarterBundle/ModularSci_Comm/Textures/T_Trims_A_diff.uasset",
 				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/AssetPacks/ModularSciFiSeason1/StarterBundle/ModularSci_Comm/Textures/T_Trims_A_ML.uasset",
-				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/AssetPacks/ModularSciFiSeason1/StarterBundle/ModularSci_Comm/Textures/T_Trims_A_normals.uasset"
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/AssetPacks/ModularSciFiSeason1/StarterBundle/ModularSci_Comm/Textures/T_Trims_A_normals.uasset",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/BP_ShooterCharacter.uasset",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/MainMap.umap",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/BP_SSPawn.uasset",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/BP_SimpleShooterGameMode.uasset",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/BP_ShooterPawn.uasset",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/Inputs/InputActions/IA_Move.uasset",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/Inputs/InputActions/IA_Look.uasset",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/Inputs/InputActions/IA_Jump.uasset",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/Inputs/InputMappingContexts/NewInputMappingContext.uasset",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/Inputs/InputMappingContexts/IMC_Default.uasset",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/Inputs/InputActions/IA_Fire.uasset",
+				"D:/GitHub/UE5-Simple-Shooter/SimpleShooter/Content/SimpleShooterGameMode.uasset"
 			]
 		}
 	]

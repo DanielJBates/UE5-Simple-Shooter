@@ -29,10 +29,16 @@ private:
 	UInputAction* LookInputAction;
 
 	UPROPERTY(EditAnywhere, Category = "Player Input");
+	UInputAction* LookRateInputAction;
+
+	UPROPERTY(EditAnywhere, Category = "Player Input");
 	UInputAction* JumpInputAction;
 
 	UPROPERTY(EditAnywhere, Category = "Player Input");
 	UInputAction* FireInputAction;
+
+	UPROPERTY(EditAnywhere, Category = "Player Input");
+	float RotationRate = 10;
 
 public:
 	// Sets default values for this character's properties
@@ -52,4 +58,5 @@ public:
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	void LookRate(const FInputActionValue& Value);
 };

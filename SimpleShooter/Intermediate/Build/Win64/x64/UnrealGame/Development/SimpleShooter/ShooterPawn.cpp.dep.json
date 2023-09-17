@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\github\\ue5-simple-shooter\\simpleshooter\\source\\simpleshooter\\shooterpawn.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\github\\ue5-simple-shooter\\simpleshooter\\intermediate\\build\\win64\\x64\\simpleshooter\\development\\engine\\sharedpch.engine.cpp20.h.pch",
+        "Includes": [
+            "d:\\github\\ue5-simple-shooter\\simpleshooter\\intermediate\\build\\win64\\x64\\unrealgame\\development\\simpleshooter\\definitions.simpleshooter.h",
+            "d:\\github\\ue5-simple-shooter\\simpleshooter\\source\\simpleshooter\\shooterpawn.h",
+            "d:\\github\\ue5-simple-shooter\\simpleshooter\\intermediate\\build\\win64\\unrealgame\\inc\\simpleshooter\\uht\\shooterpawn.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

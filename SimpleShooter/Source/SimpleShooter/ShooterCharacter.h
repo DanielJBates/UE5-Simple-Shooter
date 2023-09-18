@@ -38,7 +38,7 @@ private:
 	UInputAction* FireInputAction;
 
 	UPROPERTY(EditAnywhere, Category = "Player Input");
-	float RotationRate = 10;
+	float RotationRate = 100;
 
 public:
 	// Sets default values for this character's properties

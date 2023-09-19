@@ -10,6 +10,7 @@
 
 class UInputMappingContext;
 class UInputAction;
+class AGunActor;
 
 UCLASS()
 class SIMPLESHOOTER_API AShooterCharacter : public ACharacter
@@ -38,8 +39,12 @@ private:
 	UInputAction* FireInputAction;
 
 	UPROPERTY(EditAnywhere, Category = "Player Input");
-	float RotationRate = 100;
+	float LookRotationRate = 100;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Classes")
+	TSubclassOf<AGunActor> GunActorClass;
+
+	AGunActor* GunActor;
 public:
 	// Sets default values for this character's properties
 	AShooterCharacter();
@@ -59,4 +64,5 @@ private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	void LookRate(const FInputActionValue& Value);
+	void FireGun(const FInputActionValue& Value);
 };

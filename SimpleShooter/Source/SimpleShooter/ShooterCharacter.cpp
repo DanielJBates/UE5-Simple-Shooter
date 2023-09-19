@@ -2,7 +2,7 @@
 
 
 #include "ShooterCharacter.h"
-
+#include "GunActor.h"
 #include "Components/InputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
@@ -20,6 +20,11 @@ AShooterCharacter::AShooterCharacter()
 void AShooterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
+	GunActor = GetWorld()->SpawnActor<AGunActor>(GunActorClass);
+	GunActor->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
+	GunActor->SetOwner(this);
 
 	ShooterCharacterController = Cast<APlayerController>(GetController());
 
@@ -50,6 +55,7 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		EnhancedInputComponent->BindAction(LookInputAction, ETriggerEvent::Triggered, this, &AShooterCharacter::Look);
 		EnhancedInputComponent->BindAction(LookRateInputAction, ETriggerEvent::Triggered, this, &AShooterCharacter::LookRate);
 		EnhancedInputComponent->BindAction(JumpInputAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+		EnhancedInputComponent->BindAction(FireInputAction, ETriggerEvent::Started, this, &AShooterCharacter::FireGun);
     }
 }
 
@@ -89,12 +95,17 @@ void AShooterCharacter::LookRate(const FInputActionValue& Value)
 
 	if(LookValue.Y != 0)
 	{	
-		AddControllerPitchInput(RotationRate * LookValue.Y * GetWorld()->GetDeltaSeconds());
+		AddControllerPitchInput(LookRotationRate * LookValue.Y * GetWorld()->GetDeltaSeconds());
 	}
 
 	if(LookValue.X != 0)
 	{
-		AddControllerYawInput(RotationRate * LookValue.X * GetWorld()->GetDeltaSeconds());
+		AddControllerYawInput(LookRotationRate * LookValue.X * GetWorld()->GetDeltaSeconds());
 	}
 }
 
+void AShooterCharacter::FireGun(const FInputActionValue& Value)
+{
+	
+	GunActor->Fire();
+}

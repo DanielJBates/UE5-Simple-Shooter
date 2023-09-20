@@ -106,6 +106,5 @@ void AShooterCharacter::LookRate(const FInputActionValue& Value)
 
 void AShooterCharacter::FireGun(const FInputActionValue& Value)
 {
-	
 	GunActor->Fire();
 }

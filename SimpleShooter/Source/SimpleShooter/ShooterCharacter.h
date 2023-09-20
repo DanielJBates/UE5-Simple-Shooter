@@ -45,6 +45,12 @@ private:
 	TSubclassOf<AGunActor> GunActorClass;
 
 	AGunActor* GunActor;
+
+	UPROPERTY(EditDefaultsOnly)
+	float MaxHealth = 100.0f;
+
+	UPROPERTY(VisibleAnywhere)
+	float Health;
 public:
 	// Sets default values for this character's properties
 	AShooterCharacter();
@@ -59,6 +65,11 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
+	UFUNCTION(BlueprintPure)
+	bool IsAlive() const;
 
 private:
 	void Move(const FInputActionValue& Value);

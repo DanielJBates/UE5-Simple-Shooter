@@ -35,6 +35,8 @@ void AShooterCharacter::BeginPlay()
 			Subsystem->AddMappingContext(ShooterMappingContext, 0);
 		}
 	}
+
+	Health = MaxHealth;
 }
 
 // Called every frame
@@ -57,6 +59,17 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		EnhancedInputComponent->BindAction(JumpInputAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(FireInputAction, ETriggerEvent::Started, this, &AShooterCharacter::FireGun);
     }
+}
+
+float AShooterCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
+{
+	float DamageToApplied = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	DamageToApplied = FMath::Min(Health, DamageToApplied);
+	Health -= DamageToApplied;
+
+	UE_LOG(LogTemp, Warning, TEXT("%s Health: %f"), *GetActorNameOrLabel(), Health);
+
+	return DamageToApplied;
 }
 
 void AShooterCharacter::Move(const FInputActionValue& Value)
@@ -107,4 +120,11 @@ void AShooterCharacter::LookRate(const FInputActionValue& Value)
 void AShooterCharacter::FireGun(const FInputActionValue& Value)
 {
 	GunActor->Fire();
+}
+
+bool AShooterCharacter::IsAlive() const
+{
+	if(Health <= 0.0f) return false;
+
+	return true;
 }

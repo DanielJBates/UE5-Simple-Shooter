@@ -3,6 +3,7 @@
 #include "GunActor.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Engine/DamageEvents.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -29,7 +30,6 @@ void AGunActor::BeginPlay()
 void AGunActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AGunActor::Fire()
@@ -58,6 +58,19 @@ void AGunActor::Fire()
 
 		FVector ShotDirection = -ViewPointRotation.Vector();
 
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitFlash, Hit.ImpactPoint, ShotDirection.Rotation());
+		if(Cast<APawn>(Hit.GetActor()))
+		{
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitPawnFlash, Hit.ImpactPoint, ShotDirection.Rotation());
+		}
+		else
+		{
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitWorldFlash, Hit.ImpactPoint, ShotDirection.Rotation());
+		}
+
+		if(AActor* HitActor = Hit.GetActor())
+		{
+			FPointDamageEvent DamageEvent(Damage, Hit, ShotDirection, nullptr);
+			HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+		}
 	}
 }

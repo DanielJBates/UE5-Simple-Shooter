@@ -6,6 +6,7 @@
 #include "Components/InputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Components/CapsuleComponent.h"
 
 
 // Sets default values
@@ -67,7 +68,11 @@ float AShooterCharacter::TakeDamage(float DamageAmount, struct FDamageEvent cons
 	DamageToApplied = FMath::Min(Health, DamageToApplied);
 	Health -= DamageToApplied;
 
-	UE_LOG(LogTemp, Warning, TEXT("%s Health: %f"), *GetActorNameOrLabel(), Health);
+	if(!IsAlive())
+	{
+		DetachFromControllerPendingDestroy();
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 
 	return DamageToApplied;
 }
@@ -117,7 +122,7 @@ void AShooterCharacter::LookRate(const FInputActionValue& Value)
 	}
 }
 
-void AShooterCharacter::FireGun(const FInputActionValue& Value)
+void AShooterCharacter::FireGun()
 {
 	GunActor->Fire();
 }

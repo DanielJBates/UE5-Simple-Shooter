@@ -70,10 +70,11 @@ public:
 
 	UFUNCTION(BlueprintPure)
 	bool IsAlive() const;
-
+	
+	void FireGun();
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	void LookRate(const FInputActionValue& Value);
-	void FireGun(const FInputActionValue& Value);
+	
 };

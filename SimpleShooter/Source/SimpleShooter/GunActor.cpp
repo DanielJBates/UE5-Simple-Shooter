@@ -49,8 +49,11 @@ void AGunActor::Fire()
 	FVector End = ViewPointLocation + ViewPointRotation.Vector() * MaxRange;
 
 	FHitResult Hit;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+	Params.AddIgnoredActor(GetOwner());
 
-	if(GetWorld()->LineTraceSingleByChannel(Hit, ViewPointLocation, End, ECollisionChannel::ECC_GameTraceChannel1))
+	if(GetWorld()->LineTraceSingleByChannel(Hit, ViewPointLocation, End, ECollisionChannel::ECC_GameTraceChannel1, Params))
 	{
 		DrawDebugPoint(GetWorld(), ViewPointLocation, 20, FColor::Green, true);
 		DrawDebugPoint(GetWorld(), Hit.ImpactPoint, 20, FColor::Red, true);

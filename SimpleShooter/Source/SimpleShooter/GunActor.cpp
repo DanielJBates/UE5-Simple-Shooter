@@ -36,40 +36,55 @@ void AGunActor::Fire()
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
 
-	APawn* OwnerPawn = Cast<APawn>(GetOwner());
-	if(!OwnerPawn) return;
+	FHitResult Hit;
+	FVector ShotDirection;
 
-	AController* OwnerController = OwnerPawn->GetController();
+	if(!GunTrace(Hit, ShotDirection)) return;
+
+	if(Cast<APawn>(Hit.GetActor()))
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitPawnFlash, Hit.ImpactPoint, ShotDirection.Rotation());
+	}
+	else
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitWorldFlash, Hit.ImpactPoint, ShotDirection.Rotation());
+	}
+
+	AController* OwnerController = GetOwnerController();
 	if(!OwnerController) return;
+
+	if(AActor* HitActor = Hit.GetActor())
+	{
+		FPointDamageEvent DamageEvent(Damage, Hit, ShotDirection, nullptr);
+		HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+	}
+	
+}
+
+bool AGunActor::GunTrace(FHitResult& OutHitResult, FVector& OutShotDirection)
+{
+	AController* OwnerController = GetOwnerController();
+	if(!OwnerController) return false;
 
 	FVector ViewPointLocation;
 	FRotator ViewPointRotation;
 	OwnerController->GetPlayerViewPoint(ViewPointLocation, ViewPointRotation);
 
+	OutShotDirection = -ViewPointRotation.Vector();
+
 	FVector End = ViewPointLocation + ViewPointRotation.Vector() * MaxRange;
 
-	FHitResult Hit;
 	FCollisionQueryParams Params;
 	Params.AddIgnoredActor(this);
 	Params.AddIgnoredActor(GetOwner());
 
-	if(GetWorld()->LineTraceSingleByChannel(Hit, ViewPointLocation, End, ECollisionChannel::ECC_GameTraceChannel1, Params))
-	{
-		FVector ShotDirection = -ViewPointRotation.Vector();
+	return GetWorld()->LineTraceSingleByChannel(OutHitResult, ViewPointLocation, End, ECollisionChannel::ECC_GameTraceChannel1, Params);
+}
 
-		if(Cast<APawn>(Hit.GetActor()))
-		{
-			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitPawnFlash, Hit.ImpactPoint, ShotDirection.Rotation());
-		}
-		else
-		{
-			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitWorldFlash, Hit.ImpactPoint, ShotDirection.Rotation());
-		}
+AController* AGunActor::GetOwnerController() const
+{
+	APawn* OwnerPawn = Cast<APawn>(GetOwner());
+	if(!OwnerPawn) return nullptr;
 
-		if(AActor* HitActor = Hit.GetActor())
-		{
-			FPointDamageEvent DamageEvent(Damage, Hit, ShotDirection, nullptr);
-			HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
-		}
-	}
+	return OwnerPawn->GetController();
 }

@@ -7,6 +7,8 @@
 
 #include "GunActor.generated.h"
 
+class AController;
+
 UCLASS()
 class SIMPLESHOOTER_API AGunActor : public AActor
 {
@@ -47,4 +49,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void Fire();
+
+private:
+	bool GunTrace(FHitResult& OutHitResult, FVector& OutShotDirection);
+
+	AController* GetOwnerController() const;
 };

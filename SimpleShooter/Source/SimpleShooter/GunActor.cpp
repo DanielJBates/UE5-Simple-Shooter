@@ -55,10 +55,6 @@ void AGunActor::Fire()
 
 	if(GetWorld()->LineTraceSingleByChannel(Hit, ViewPointLocation, End, ECollisionChannel::ECC_GameTraceChannel1, Params))
 	{
-		DrawDebugPoint(GetWorld(), ViewPointLocation, 20, FColor::Green, true);
-		DrawDebugPoint(GetWorld(), Hit.ImpactPoint, 20, FColor::Red, true);
-		DrawDebugLine(GetWorld(), ViewPointLocation, Hit.ImpactPoint, FColor::Blue, true);
-
 		FVector ShotDirection = -ViewPointRotation.Vector();
 
 		if(Cast<APawn>(Hit.GetActor()))

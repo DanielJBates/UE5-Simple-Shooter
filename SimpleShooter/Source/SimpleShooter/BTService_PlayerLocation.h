@@ -7,9 +7,6 @@
 
 #include "BTService_PlayerLocation.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class SIMPLESHOOTER_API UBTService_PlayerLocation : public UBTService_BlackboardBase
 {

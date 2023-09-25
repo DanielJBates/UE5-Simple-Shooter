@@ -7,6 +7,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "ShooterGameModeBase.h"
 
 
 // Sets default values
@@ -69,7 +70,13 @@ float AShooterCharacter::TakeDamage(float DamageAmount, struct FDamageEvent cons
 	Health -= DamageToApplied;
 
 	if(!IsAlive())
-	{
+	{	
+		AShooterGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AShooterGameModeBase>();
+		if(GameMode)
+		{
+			GameMode->PawnKilled(this);
+		}
+
 		DetachFromControllerPendingDestroy();
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}

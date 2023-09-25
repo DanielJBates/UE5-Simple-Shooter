@@ -14,7 +14,6 @@ class SIMPLESHOOTER_API AShooterAIController : public AAIController
 {
 	GENERATED_BODY()
 	
-
 private:
 	AActor* Target;
 
@@ -29,4 +28,5 @@ public:
 // Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	bool IsAlive() const;
 };

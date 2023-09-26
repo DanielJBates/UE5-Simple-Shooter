@@ -8,6 +8,7 @@
 #include "GunActor.generated.h"
 
 class AController;
+class USoundBase;
 
 UCLASS()
 class SIMPLESHOOTER_API AGunActor : public AActor
@@ -29,6 +30,12 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* HitPawnFlash;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* MuzzleSound;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* HitSound;
 
 	UPROPERTY(EditAnywhere)
 	float MaxRange = 1000.0f;

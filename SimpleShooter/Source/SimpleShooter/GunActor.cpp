@@ -35,6 +35,7 @@ void AGunActor::Tick(float DeltaTime)
 void AGunActor::Fire()
 {
 	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
+	UGameplayStatics::SpawnSoundAttached(MuzzleSound, Mesh, TEXT("MuzzleFlashSocket"));
 
 	FHitResult Hit;
 	FVector ShotDirection;
@@ -48,6 +49,7 @@ void AGunActor::Fire()
 	else
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitWorldFlash, Hit.ImpactPoint, ShotDirection.Rotation());
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, Hit.ImpactPoint);
 	}
 
 	AController* OwnerController = GetOwnerController();
@@ -58,7 +60,6 @@ void AGunActor::Fire()
 		FPointDamageEvent DamageEvent(Damage, Hit, ShotDirection, nullptr);
 		HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
 	}
-	
 }
 
 bool AGunActor::GunTrace(FHitResult& OutHitResult, FVector& OutShotDirection)

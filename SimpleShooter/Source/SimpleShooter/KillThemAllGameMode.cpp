@@ -4,6 +4,7 @@
 #include "KillThemAllGameMode.h"
 #include "EngineUtils.h"
 #include "ShooterAIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 void AKillThemAllGameMode::PawnKilled(APawn* Pawn)
 {
@@ -29,6 +30,11 @@ void AKillThemAllGameMode::EndGame(bool bIsPlayerWinner)
 {
     for(AController* Controller : TActorRange<AController>(GetWorld()))
     {
+        if(AAIController* AIController = Cast<AAIController>(Controller))
+        {
+            AIController->GetBlackboardComponent()->ClearValue("PlayerLocation");
+        }
+
         bool bIsWinner = Controller->IsPlayerController() == bIsPlayerWinner;
         Controller->GameHasEnded(Controller->GetPawn(), bIsWinner);
     }

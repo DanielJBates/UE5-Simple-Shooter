@@ -70,6 +70,9 @@ public:
 
 	UFUNCTION(BlueprintPure)
 	bool IsAlive() const;
+
+	UFUNCTION(BlueprintPure)
+	float GetHealthPercent() const;
 	
 	void FireGun();
 private:

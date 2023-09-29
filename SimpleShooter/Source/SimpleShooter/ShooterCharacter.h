@@ -20,32 +20,12 @@ class SIMPLESHOOTER_API AShooterCharacter : public ACharacter
 private:
 	APlayerController* ShooterCharacterController;
 
-	UPROPERTY(EditAnywhere, Category = "Player Input");
-	UInputMappingContext* ShooterMappingContext;
-
-	UPROPERTY(EditAnywhere, Category = "Player Input");
-	UInputAction* MoveInputAction;
-
-	UPROPERTY(EditAnywhere, Category = "Player Input");
-	UInputAction* LookInputAction;
-
-	UPROPERTY(EditAnywhere, Category = "Player Input");
-	UInputAction* LookRateInputAction;
-
-	UPROPERTY(EditAnywhere, Category = "Player Input");
-	UInputAction* JumpInputAction;
-
-	UPROPERTY(EditAnywhere, Category = "Player Input");
-	UInputAction* FireInputAction;
-
-	UPROPERTY(EditAnywhere, Category = "Player Input");
-	float LookRotationRate = 100;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Classes")
 	TSubclassOf<AGunActor> GunActorClass;
 
 	AGunActor* GunActor;
 
+protected:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxHealth = 100.0f;
 
@@ -63,20 +43,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 	UFUNCTION(BlueprintPure)
 	bool IsAlive() const;
-
-	UFUNCTION(BlueprintPure)
-	float GetHealthPercent() const;
 	
 	void FireGun();
-private:
-	void Move(const FInputActionValue& Value);
-	void Look(const FInputActionValue& Value);
-	void LookRate(const FInputActionValue& Value);
 };

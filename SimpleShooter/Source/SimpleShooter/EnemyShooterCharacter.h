@@ -13,8 +13,17 @@ class SIMPLESHOOTER_API AEnemyShooterCharacter : public AShooterCharacter
 	GENERATED_BODY()
 	
 private:
-	UPROPERTY(EditAnywhere, Category = "Patrol")
+	UPROPERTY(EditInstanceOnly, Category = "Patrol", Meta = (MakeEditWidget = true))
 	TArray<FVector> PatrolPathNodes;
+
+	//Patrol path will loop in the following ways:
+	// 0 being the first node and 2 being the last node
+	//True: (Node 0, Node 1, Node 2, Node 1, Node 0, Node 1, Node 2 etc)
+	//False: (Node 0, Node 1, Node 2, Node 0, Node 1, Node 2 etc)
+	UPROPERTY(EditInstanceOnly, Category = "Patrol")
+	bool bBacktrackLoop = false; 
+
+	bool bForwardPatrol = true;
 
 	int PatrolTargetIndex = 0;
 	FVector PatrolTargetLocation;

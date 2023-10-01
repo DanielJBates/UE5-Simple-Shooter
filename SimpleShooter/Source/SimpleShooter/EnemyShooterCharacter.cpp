@@ -2,6 +2,7 @@
 
 
 #include "EnemyShooterCharacter.h"
+#include "Kismet/KismetMathLibrary.h"
 
 void AEnemyShooterCharacter::BeginPlay()
 {
@@ -13,6 +14,11 @@ void AEnemyShooterCharacter::BeginPlay()
 	}
 	else
 	{
+		for (int i = 0; i < PatrolPathNodes.Num(); i++)
+		{
+			PatrolPathNodes[i] = UKismetMathLibrary::TransformLocation(GetActorTransform(), PatrolPathNodes[i]);
+		}
+		
 		PatrolTargetLocation = PatrolPathNodes[0];
 	}
 }
@@ -21,13 +27,32 @@ void AEnemyShooterCharacter::UpdatePatrolTargetLocation()
 {
 	if (PatrolPathNodes.Num() <= 0) return;
 
-	if (PatrolTargetIndex == PatrolPathNodes.Num() - 1)
+	if (bBacktrackLoop)
 	{
-		PatrolTargetIndex = 0;
+		if ((PatrolTargetIndex == PatrolPathNodes.Num() - 1 && bForwardPatrol) || (PatrolTargetIndex == 0 && !bForwardPatrol))
+		{
+			bForwardPatrol = !bForwardPatrol;
+		}
+
+		if (bForwardPatrol)
+		{
+			++PatrolTargetIndex;
+		}
+		else
+		{
+			--PatrolTargetIndex;
+		}
 	}
 	else
 	{
-		++PatrolTargetIndex;
+		if (PatrolTargetIndex == PatrolPathNodes.Num() - 1)
+		{
+			PatrolTargetIndex = 0;
+		}
+		else
+		{
+			++PatrolTargetIndex;
+		}
 	}
 
 	PatrolTargetLocation = PatrolPathNodes[PatrolTargetIndex];

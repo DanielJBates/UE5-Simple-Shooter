@@ -5,6 +5,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
+#include "EnemyShooterCharacter.h"
+#include "Perception/PawnSensingComponent.h"
 
 UBTService_PlayerLocationIfSeen::UBTService_PlayerLocationIfSeen()
 {
@@ -15,14 +17,18 @@ void UBTService_PlayerLocationIfSeen::TickNode(UBehaviorTreeComponent& OwnerComp
 {
     Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
     
-    AAIController* Controller = OwnerComp.GetAIOwner();
-    if(!Controller) return;
+
+    AEnemyShooterCharacter* EnemyCharacter = Cast<AEnemyShooterCharacter>(OwnerComp.GetAIOwner()->GetPawn());
+    if (!EnemyCharacter)  return;
+
+    UPawnSensingComponent* PawnSensor = EnemyCharacter->GetPawnSensor();
+    if (!PawnSensor)  return;
 
     APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
     if(!PlayerPawn) return;
 
 
-    if(Controller->LineOfSightTo(PlayerPawn))
+    if(PawnSensor->CouldSeePawn(PlayerPawn) && PawnSensor->HasLineOfSightTo(PlayerPawn))
     {
         OwnerComp.GetBlackboardComponent()->SetValueAsObject(GetSelectedBlackboardKey(), PlayerPawn);
     }

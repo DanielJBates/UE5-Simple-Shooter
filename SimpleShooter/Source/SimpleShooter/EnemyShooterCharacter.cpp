@@ -5,6 +5,15 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Perception/PawnSensingComponent.h"
 
+// Sets default values
+AEnemyShooterCharacter::AEnemyShooterCharacter()
+{
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+	PawnSensor = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("Pawn Sensor"));
+}
+
 void AEnemyShooterCharacter::BeginPlay()
 {
 	Super::BeginPlay();

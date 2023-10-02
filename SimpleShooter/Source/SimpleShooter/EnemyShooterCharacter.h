@@ -30,6 +30,13 @@ private:
 	int PatrolTargetIndex = 0;
 	FVector PatrolTargetLocation;
 
+	UPROPERTY(EditDefaultsOnly)
+	UPawnSensingComponent* PawnSensor;
+
+public:
+	// Sets default values for this character's properties
+	AEnemyShooterCharacter();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -37,4 +44,5 @@ protected:
 public:
 	void UpdatePatrolTargetLocation();
 	FVector GetPatrolTargetLocation() const { return PatrolTargetLocation; }
+	UPawnSensingComponent* GetPawnSensor() const { return PawnSensor; }
 };

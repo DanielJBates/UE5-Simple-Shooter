@@ -3,6 +3,7 @@
 
 #include "EnemyShooterCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Perception/PawnSensingComponent.h"
 
 void AEnemyShooterCharacter::BeginPlay()
 {

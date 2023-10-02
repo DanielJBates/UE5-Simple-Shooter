@@ -7,6 +7,8 @@
 
 #include "EnemyShooterCharacter.generated.h"
 
+class UPawnSensingComponent;
+
 UCLASS()
 class SIMPLESHOOTER_API AEnemyShooterCharacter : public AShooterCharacter
 {

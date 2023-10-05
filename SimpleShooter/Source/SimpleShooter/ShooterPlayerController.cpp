@@ -14,6 +14,8 @@ void AShooterPlayerController::BeginPlay()
     {
         HUD->AddToViewport();
     }
+
+    ReturnDelegate.BindUFunction(this, FName("SwitchLevel"), FString("MainMenu"));
 }
 
 void AShooterPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner)
@@ -39,10 +41,10 @@ void AShooterPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIs
         }
     }
 
-    GetWorldTimerManager().SetTimer(RestartHandle, this, &APlayerController::RestartLevel, RestartDelay);
+    GetWorldTimerManager().SetTimer(ReturnHandle, ReturnDelegate, ReturnDelay, false);
 }
 
-void AShooterPlayerController::RestartLevel()
+void AShooterPlayerController::SwitchLevel(const FString& URL)
 {
-    Super::RestartLevel();
+    Super::SwitchLevel(URL);
 }

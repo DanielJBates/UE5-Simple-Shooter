@@ -25,8 +25,11 @@ void UBTService_PlayerLocationIfSeen::TickNode(UBehaviorTreeComponent& OwnerComp
     if (!PawnSensor)  return;
 
     APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-    if(!PlayerPawn) return;
-
+    if (!PlayerPawn)
+    {
+        OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
+        return;
+    }
 
     if(PawnSensor->CouldSeePawn(PlayerPawn) && PawnSensor->HasLineOfSightTo(PlayerPawn))
     {

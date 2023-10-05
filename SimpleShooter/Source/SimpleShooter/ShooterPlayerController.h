@@ -28,9 +28,11 @@ private:
 	UUserWidget* HUD; 
 
 	UPROPERTY(EditAnywhere)
-	float RestartDelay = 5.0f;
+	float ReturnDelay = 3.0f;
 
-	FTimerHandle RestartHandle;
+	FTimerHandle ReturnHandle;
+
+	FTimerDelegate ReturnDelegate;
 
 protected:
 	// Called when the game starts or when spawned
@@ -38,5 +40,5 @@ protected:
 
 public:
 	virtual void GameHasEnded(class AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
-	virtual void RestartLevel() override;	
+	virtual void SwitchLevel(const FString& URL) override;
 };
